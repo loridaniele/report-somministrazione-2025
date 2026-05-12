@@ -1,0 +1,515 @@
+---
+title: "{{< meta titoli.cap_appendice >}}"
+---
+
+<!-- # {{< meta titoli.cap_appendice >}} 
+# Appendice Statistica {#appendice-statistica} 
+
+:: {#appendice-statistica} {.unnumbered}
+-->
+
+::: {#appendice-statistica}
+
+## {{< meta titoli.cap_contratti >}} 
+
+<!--#### Cap.1 --> 
+<!-- cap 1 - lista_grafici_report = [
+    "grafico_1_COB_tipologia_contratti_15-25a.html",
+    "grafico_2_COB_qualifiche_25_cat_contratti_15-25a.html",
+    "grafico_5_COB_EVENTI_tipologia_contratti_15-25a.html",
+    "grafico_6_COB_EVENTI_qualifiche_25_cat_contratti_15-25a.html",
+    "grafico_3_COB_SEX_tipologia_contratti_15-25a.html",
+    "grafico_4_COB_SEX_qualifiche_25_cat_contratti_15-25a.html",
+    "grafico_9_COB_CPI_tutti_contratti_1525.html",
+    "grafico_10_COB_CPI_top25Qualif_1525.html",
+    "grafico_11_COB_ETA_ISTAT_tutti_contratti_1525.html",
+    "grafico_12_COB_ETA_ISTAT_top25Qualif_1525.html",
+    "grafico_7_COB_NAZ_Tutti_contr_1525_solo_10_naz.html",
+    "grafico_8_COB_NAZ_top25Qualif_1525_solo_10_naz.html",
+    "grafico_7_COB_NAZ_Tutti_contr_1525_solo_10_naz_senza_Italia.html",
+    "grafico_8_COB_NAZ_top25Qualif_1525_solo_10_naz_senza_Italia.html"
+]   -->       
+
+
+
+<!-- nota che ho inserito grafici sulle nazionalita differenti per avere tabelle complessive e tabelle filtrate per escludere l'Italia, così da poter confrontare meglio i dati. che qui non riporto -->
+
+::: {.appendice-wide}
+
+```{python}
+#| echo: false
+#| warning: false
+
+# Importiamo anche la tua nuova funzione!
+from py_ipynb.helper_somministrazione import estrai_tabella_barre_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+lista_grafici = [
+    "grafico_1_COB_tipologia_contratti_15-25a.html",
+    "grafico_2_COB_qualifiche_25_cat_contratti_15-25a.html",
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_barre_da_html_con_titolo(percorso_file_html)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+
+```
+
+
+
+
+```{python}
+#| echo: false
+#| warning: false
+
+from py_ipynb.helper_somministrazione import estrai_tabella_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+# 1. La tua "Banca Dati" (Aggiungi qui i futuri grafici)
+lista_grafici = [
+    "grafico_5_COB_EVENTI_tipologia_contratti_15-25a.html",
+    "grafico_6_COB_EVENTI_qualifiche_25_cat_contratti_15-25a.html",
+    "grafico_3_COB_SEX_tipologia_contratti_15-25a.html",
+    "grafico_4_COB_SEX_qualifiche_25_cat_contratti_15-25a.html",
+    "grafico_9_COB_CPI_tutti_contratti_1525.html",
+    "grafico_10_COB_CPI_top25Qualif_1525.html",
+    "grafico_11_COB_ETA_ISTAT_tutti_contratti_1525.html",
+    "grafico_12_COB_ETA_ISTAT_top25Qualif_1525.html",
+    "grafico_7_COB_NAZ_Tutti_contr_1525_solo_25_naz.html",
+    "grafico_8_COB_NAZ_top25Qualif_1525_solo_25_naz.html",
+    
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_da_html_con_titolo(percorso_file_html, trasponi=True)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+```
+
+
+:::
+
+
+{{< pagebreak >}}
+
+## {{< meta titoli.focus_camerieri >}}
+<!--#### Cap.2  --> 
+<!-- cap 2 - lista_grafici_capitolo_2 = [
+    "grafico_6_camerieri_di_ristorante.html",
+    "grafico_12_camerieri_di_ristorante.html",
+    "grafico_4_COB_SEX_qualifiche_25_cat_contratti_15-25a.html", # Già presente nel cap 1
+    "grafico_4_camerieri_di_ristorante.html",
+    "grafico_8_camerieri_di_ristorante.html",
+    "grafico_8__camerieri_di_ristorante_senza_Italia.html",
+    "grafico_10_camerieri_di_ristorante.html"
+]
+   -->       
+
+
+
+<!-- nota che un grafico è già presente nel cap 1, quindi non lo riporto -->
+
+::: {.appendice-wide}
+
+
+
+
+```{python}
+#| echo: false
+#| warning: false
+
+from py_ipynb.helper_somministrazione import estrai_tabella_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+# 1. La tua "Banca Dati" (Aggiungi qui i futuri grafici)
+lista_grafici = [
+    "grafico_6_camerieri_di_ristorante.html",
+    "grafico_12_camerieri_di_ristorante.html",
+    "grafico_4_camerieri_di_ristorante.html",
+    "grafico_8_camerieri_di_ristorante.html",
+    "grafico_10_camerieri_di_ristorante.html"   
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_da_html_con_titolo(percorso_file_html, trasponi=True)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+```
+
+
+:::
+
+
+
+{{< pagebreak >}}
+
+## {{< meta titoli.cap_somministrazione >}} <!-- #### Cap.3 --> 
+<!-- cap 3 - lista_grafici_somministrazione = [
+    "grafico_1_COB_tipologia_contratti_interinale.html",
+    "grafico_2_COB_tutti_contratti_ateco.html",
+    "grafico_2_COB_interinale_ateco_25.html",
+    "grafico_3COB_sex_tutti_contratti.html",
+    "grafico_4_COB_SEX_interinale_ateco_25.html",
+    "grafico_5_COB_EVENTI_tipologia_contratti_15-25a.html", # Comune ad altri cap
+    "grafico_6_COB_EVENTI_interinale_ateco_25.html",
+    "grafico_7_COB_NAZ_Tutti_contr_1525_solo_10_naz.html",  # Comune ad altri cap
+    "grafico_8_COB_NAZ_10_interinale_ateco_25.html",
+    "grafico_7_COB_NAZ_Tutti_contr_1525_solo_10_naz_senza_Italia.html", # Comune
+    "grafico_8_COB_NAZ_10_interinale_ateco_25_senza_Italia.html",
+    "grafico_9_COB_CPI_tutti_contratti_1525.html",         # Comune
+    "grafico_10_COB_CPI_interinale_ateco_25.html",
+    "grafico_11_COB_ETA_ISTAT_tutti_contratti_1525.html",  # Comune
+    "grafico_12_COB_ETA_ISTAT_interinale_ateco_25.html"
+]   -->       
+
+
+
+<!-- nota che cinque grafici sono già presenti in precedenza e non vengono ripetuti -->
+
+::: {.appendice-wide}
+
+```{python}
+#| echo: false
+#| warning: false
+
+# Importiamo anche la tua nuova funzione!
+from py_ipynb.helper_somministrazione import estrai_tabella_barre_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+lista_grafici = [
+    "grafico_1_COB_tipologia_contratti_interinale.html",
+    "grafico_2_COB_tutti_contratti_ateco.html",
+    "grafico_2_COB_interinale_ateco_25.html",
+]
+
+output_cumulativo = ""
+
+for nome_file in lista_grafici:
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # 1. Estrazione normale
+    df_tabella, titolo_dinamico = estrai_tabella_barre_da_html_con_titolo(percorso_file_html)
+    
+    # 2. --- IL TUO FILTRO DI SOSTITUZIONE ESATTA ---
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # 3. Assemblaggio con il titolo revisionato
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+    
+    # ... Magia condizionale per PDF/HTML ...
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\clearpage\n:::\n\n"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+Markdown(output_cumulativo)# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_barre_da_html_con_titolo(percorso_file_html)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+
+```
+
+
+
+
+```{python}
+#| echo: false
+#| warning: false
+
+from py_ipynb.helper_somministrazione import estrai_tabella_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+# 1. La tua "Banca Dati" (Aggiungi qui i futuri grafici)
+lista_grafici = [
+    "grafico_3COB_sex_tutti_contratti.html",
+    "grafico_4_COB_SEX_interinale_ateco_25.html",
+    "grafico_6_COB_EVENTI_interinale_ateco_25.html",
+    "grafico_8_COB_NAZ_10_interinale_ateco_25.html",
+    "grafico_8_COB_NAZ_10_interinale_ateco_25_senza_Italia.html",
+    "grafico_10_COB_CPI_interinale_ateco_25.html",
+    "grafico_12_COB_ETA_ISTAT_interinale_ateco_25.html"
+    
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_da_html_con_titolo(percorso_file_html, trasponi=True)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+```
+
+
+:::
+
+
+{{< pagebreak >}}
+
+## {{< meta titoli.focus_conduttori >}} 
+
+<!-- #### Cap.4  -->
+<!-- cap 4 - lista_grafici_somministrazione = [
+    "grafico_2_COB_interinale_ateco_25.html",          # Già presente in somministrazione
+    "grafico_2_COB_qualifiche_25_cat_interinale.html",
+    "grafico_3COB_SEX_interinale.html",
+    "grafico_4_COB_SEX_qualifiche_Conduttori.html",
+    "grafico_5COB_EVENTI_interinale.html",
+    "grafico_6COB_EVENTI_conduttori.html",
+    "grafico_8COB_NAZ_conduttori.html",
+    "grafico_10COB_CPI_conduttori.html",
+    "grafico_12COB_ETA_conduttori.html"
+]   -->       
+
+
+
+<!-- nota che un grafico è già presente in precedenza e non viene ripetuto -->
+
+::: {.appendice-wide}
+
+
+```{python}
+#| echo: false
+#| warning: false
+
+# Importiamo anche la tua nuova funzione!
+from py_ipynb.helper_somministrazione import estrai_tabella_barre_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+lista_grafici = [
+    "grafico_2_COB_qualifiche_25_cat_interinale.html"
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_barre_da_html_con_titolo(percorso_file_html)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+
+```
+
+
+
+
+
+```{python}
+#| echo: false
+#| warning: false
+
+from py_ipynb.helper_somministrazione import estrai_tabella_da_html_con_titolo, applica_correzione_titolo
+from IPython.display import Markdown
+
+# 1. La tua "Banca Dati" (Aggiungi qui i futuri grafici)
+lista_grafici = [
+    "grafico_3COB_SEX_interinale.html",
+    "grafico_4_COB_SEX_qualifiche_Conduttori.html",
+    "grafico_5COB_EVENTI_interinale.html",
+    "grafico_6COB_EVENTI_conduttori.html",
+    "grafico_8COB_NAZ_conduttori.html",
+    "grafico_10COB_CPI_conduttori.html",
+    "grafico_12COB_ETA_conduttori.html"
+    
+]
+
+# 2. Inizializziamo il contenitore vuoto
+output_cumulativo = ""
+
+# Usiamo enumerate per sapere a che "giro" del ciclo siamo (i)
+for i, nome_file in enumerate(lista_grafici):
+    percorso_file_html = f"esportazioni_quarto/{nome_file}"
+    
+    # Estrazione
+    df_tabella, titolo_dinamico = estrai_tabella_da_html_con_titolo(percorso_file_html, trasponi=True)
+    titolo_finale = applica_correzione_titolo(titolo_dinamico)
+    
+    # --- 1. GESTIONE DEGLI SPAZI TRA LE TABELLE ---
+    # Inseriamo lo spazio verticale SOLO se NON siamo alla primissima tabella (i > 0)
+    if i > 0:
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\vspace{1cm}\n:::\n\n"
+        output_cumulativo += "\n\n::: {.content-visible when-format=\"html\"}\n<div style=\"height: 60px;\"></div>\n:::\n\n"
+        
+    # --- 2. IL SALVAVITA PER TITOLI ORFANI ---
+    # Dice a LaTeX: "Assicurati che ci sia lo spazio per il titolo e un po' di tabella (circa 8 righe)"
+    output_cumulativo += "\n\n::: {.content-visible when-format=\"pdf\"}\n\\Needspace{8\\baselineskip}\n:::\n\n"
+    
+    # --- 3. STAMPA FINALE ---
+    output_cumulativo += f"### {titolo_finale}\n\n"
+    output_cumulativo += df_tabella.to_markdown(index=False)
+
+# --- LA MAGIA DI BOOTSTRAP ---
+    # Applichiamo le classi Bootstrap solo alla tabella HTML
+    output_cumulativo += "\n\n: {.striped .hover .table-sm}\n\n"
+
+
+# Stampiamo l'intera sequenza
+Markdown(output_cumulativo)
+```
+
+
+:::
+
+:::
+
+

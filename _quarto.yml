@@ -1,0 +1,73 @@
+project:
+  type: book
+  output-dir: _output
+  resources:
+    - "esportazioni_quarto/"
+    - "images/"
+
+book:
+  title: "Report II semestre 2025 - I contratti di lavoro e sul lavoro in somministrazione nella provincia di Sondrio - 2015-2025"
+  description: "Analisi decennale sull'andamento dei contratti di lavoro e del lavoro in somministrazione nei Centri per l'Impiego della provincia di Sondrio. Osservatorio del Mercato del Lavoro della Provincia di Sondrio."
+  # 1. DATA IN FORMATO ISO (Infallibile per il parser)
+  date: "2026-05-14" 
+  # 2. FORMATTAZIONE VISIVA (Produce esattamente "14 maggio 2026")
+  date-format: "D MMMM YYYY"
+  language: it
+
+  author:
+    - name: 'Daniele Lori'
+      email: dlori@cpi.provincia.so.it
+      affiliations: "Osservatorio Mercato del Lavoro - Provincia di Sondrio - OML n. 35/2026"
+  
+  abstract: |
+    Il presente rapporto analizza le dinamiche del mercato del lavoro nella provincia di Sondrio (2015-2025) attraverso l'esame dei flussi delle Comunicazioni Obbligatorie (COB), adottando un rigoroso criterio metodologico che distingue le volumetrie burocratiche degli eventi dalla forza lavoro fisica. L'orografia occupazionale del territorio evidenzia una netta dicotomia strutturale tra due distinti ecosistemi operativi. Da un lato, il terziario turistico-ricettivo dell'Alta Valle assorbe la varianza stagionale tramite l'internalizzazione dei rapporti a termine diretti; l'esame del comparto, isolato attraverso il sismografo della qualifica dei "Camerieri", svela un metabolismo del turnover che, pur in assenza di stabilizzazioni a tempo indeterminato, si configura come una peculiare precarietà non disaggregante, capace di innescare un radicamento ritmico e prevedibile sostenuto in prevalenza dalle fasce giovanili e femminili. Dall'altro lato la Bassa Valle guida il comparto manifatturiero, per il quale la somministrazione interinale non opera come leva trasversale, bensì quale dispositivo di flessibilità quasi esclusivo, finalizzato alla saturazione degli impianti ad alta intensità di capitale (con un'egemonia assoluta dell'industria alimentare). L'analisi micro-professionale, dominata dai "Conduttori di macchinari" dolciari e dalle mansioni di logistica di fine linea, attesta un ricorso sistematico alla reiterazione burocratica di lungo periodo tramite proroghe, rivelando un'altissima sensibilità agli shock regolatori esterni. L'aggregato della somministrazione certifica, infine, una profonda transizione demografica in corso. A fronte di un deciso disimpegno della componente nazionale verso le mansioni operative maggiormente logoranti, l'elasticità richiesta dagli stabilimenti viene progressivamente assorbita da una marcata internazionalizzazione dei flussi, trainata dall'inserimento di manodopera straniera di recente stabilizzazione.
+
+    <hr style="margin: 2em 0 1em 0; border: none; border-top: 1px solid #ddd;">
+
+    ### Ringraziamenti {.unnumbered}
+    *Si desidera ringraziare la CCIAA di Sondrio per suggerimenti, consigli e motivazione, Aria spa per la fornitura dei dati, Antonella Reghenzani, Alessandra Taverna e Giulia Tarantola per il supporto tecnico e metodologico.*
+
+  chapters:
+    - index.qmd
+    - 01_Contratti.qmd
+    - 02_Focus_Qualifiche_1.qmd
+    - 03_Somministrazioni.qmd
+    - 04_Focus_Qualifiche_2.qmd 
+    - 05_Conclusioni.qmd
+    - 99_Appendice.qmd
+
+format:
+  html:
+    theme:
+      - litera
+      - stili/custom_theme.scss
+    css: stili/layout_grafici.css
+    toc: true
+    number-sections: true
+    code-fold: true
+    date: "" 
+    subtitle: "<span style='color: #FFFF00;font-weight: bold;'>**Osservatorio del Mercato del Lavoro - Provincia di Sondrio - OML n. 35/2026** <br> <img src='images/loghi_Provincia.png' alt='Provincia di Sondrio' style='height:50px;margin-top: 30%;margin-left: 0%;'> </span><br><br><br><br> <br><br><br>"
+    title-block-banner: "images/AlpiOrobie_ValGerola_Gerola15-3423.jpg"
+
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    pdf-engine: xelatex
+    toc: true
+    number-sections: true
+    geometry:
+      - margin=20mm
+    subtitle: "Osservatorio del Mercato del Lavoro - Provincia di Sondrio - OML n. 35/2026"
+    include-in-header: 
+      - stili/preamble.tex
+      - stili/copertina_pdf.tex
+
+metadata:
+  titoli:
+    cap_index: "Introduzione e nota metodologica"
+    cap_contratti: "I contratti nelle COB (2015-2025) - Trend, demografia ed eventi"
+    focus_camerieri: "FOCUS QUALIFICA: il caso dei Camerieri di ristorante"
+    cap_somministrazione: "Il lavoro in somministrazione nelle COB (2015-2025) - Trend, demografia ed eventi"
+    focus_conduttori: "FOCUS QUALIFICA: il caso dei Conduttori di macchinari di pasticceria"
+    cap_conclusioni: "Conclusioni e prospettive"
+    cap_appendice: "Appendice Statistica"
