@@ -1,0 +1,8 @@
+% preamble.tex
+\usepackage{booktabs}  % Per tabelle con linee orizzontali eleganti
+\usepackage{etoolbox}  % Permette di "agganciare" comandi agli ambienti esistenti
+\usepackage{needspace}  % Per evitare che le tabelle vengano spezzate tra due pagine
+
+% Agganciamo un rimpicciolimento del font automatico a TUTTE le tabelle
+% Puoi usare: \small, \footnotesize, \scriptsize, o \tiny
+\AtBeginEnvironment{longtable}{\footnotesize}

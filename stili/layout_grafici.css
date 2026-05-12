@@ -1,0 +1,13 @@
+
+/* struttura del layout in Quarto */
+
+/* Normalizzazione Iframe per allineamento grafici Plotly */
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: none;
+  }
+
+
