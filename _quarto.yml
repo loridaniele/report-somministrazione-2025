@@ -6,7 +6,7 @@ project:
     - "images/"
 
 book:
-  title: "Report II semestre 2025 - I contratti di lavoro e sul lavoro in somministrazione nella provincia di Sondrio - 2015-2025"
+  title: "Report II semestre 2025 - I contratti di lavoro e il lavoro in somministrazione nella provincia di Sondrio - 2015-2025"
   description: "Analisi decennale sull'andamento dei contratti di lavoro e del lavoro in somministrazione nei Centri per l'Impiego della provincia di Sondrio. Osservatorio del Mercato del Lavoro della Provincia di Sondrio."
   # 1. DATA IN FORMATO ISO (Infallibile per il parser)
   date: "2026-05-14" 
